@@ -47,7 +47,6 @@ const abc = (d) => {
   if(d.s)e(d.s,([s,v])=>_.style[r(s)]=v);
   if(d.k)Object.assign(_,d.k);
   if(d.h)_.innerHTML=d.h;
-  if(d.t)_.textContent=d.h;
   if(d.f)$(d.f).firstChild.before(_);
   if(d.l)$(d.l).appendChild(_);
   if(d.b)$(d.b).before(_);
