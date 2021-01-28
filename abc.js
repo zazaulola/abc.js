@@ -15,7 +15,6 @@
  *   d.k   element object key values
  *   d.s   element styles
  *   d.h   innerHTML
- *   d.t   textContent
  *   d.f   insert first
  *   d.l   insert last
  *   d.b   insert before
@@ -34,25 +33,22 @@
 
 
 const abc = (d) => {
-  const c = (d,n,x) => (d||document)[`createElement${x?'NS':''}`](...[x,n].flat()),
-        o = (v,c) => (Array.isArray(v)?v:[v]).map(c),
-        r = (k) => k.replace(/-(\w)/g,(m)=>m[1].toUpperCase()),
-        e = (c,f) => Object.entries(c).forEach(f);
+  const c = (n='div',d=document,x='http://www.w3.org/1999/xhtml')=>d.createElementNS(x,n),
+        o = (v,c)=>(Array.isArray(v)?v:[v]).map(c),
+        r = k=>k.replace(/-(\w)/g,m=>m[1].toUpperCase()),
+        e = (c,f)=>Object.entries(c).forEach(f);
   if("string"==typeof d)return c(!1,d);
   if(Array.isArray(d))return d.map(abc);
   if(d instanceof Element)return d;
-  if('string' == typeof d.c)d.c=d.c.split(/\s+/g);
-  const _=c(d.d,d.n,d.x);  
-  const z = [_];
-  
-  if(d.c)o(d.c,c=>_.classList.add(c));
+  const _=c(d.n,d.d,d.x),z = [_];
+  if(d.c)o('string'==typeof d.c?d.c.split(/\s+/g):d.c,c=>_.classList.add(c));
   if(d.p)e(d.p,p=>_.setAttribute(...p));
   if(d.e)e(d.e,e=>_.addEventListener(...e));
   if(d.s)e(d.s,([s,v])=>_.style[r(s)]=v);
-  if(d.k)Object.assign(_,d.p,d.k);
+  if(d.k)Object.assign(_,d.k);
   if(d.h)_.innerHTML=d.h;
   if(d.t)_.textContent=d.h;
-  if(d.f)$(d.f).insertBefore(_,$(d.f).firstChild);
+  if(d.f)$(d.f).firstChild.before(_);
   if(d.l)$(d.l).appendChild(_);
   if(d.b)$(d.b).before(_);
   if(d.a)$(d.a).after(_);
